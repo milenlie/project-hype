@@ -743,9 +743,14 @@ ${place.viralItem !== "Social trend data coming soon"
 }
           </div>
 
-          <div class="social">
-            👀 <strong>${place.social}</strong> social views this week
-          </div>
+          ${place.social !== "—"
+  ? `
+    <div class="social">
+      👀 <strong>${place.social}</strong> social views this week
+    </div>
+  `
+  : ""
+}
         </div>
       </div>
     `;
