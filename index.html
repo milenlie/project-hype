@@ -1039,6 +1039,66 @@ const realPlaces = data.elements
 
 console.log("Project Hype real places:", realPlaces);
     
+    window.projectHypePlaces = realPlaces;
+
+    const convertedPlaces = realPlaces.map((place, index) => {
+  let category = "food";
+  let categoryLabel = "Restaurant";
+  let emoji = "🍽️";
+  let photoClass = "food";
+
+  if (place.category === "cafe") {
+    category = "coffee";
+    categoryLabel = "Cafe";
+    emoji = "☕";
+    photoClass = "coffee";
+  }
+
+  if (place.category === "bar" || place.category === "pub") {
+    category = "drinks";
+    categoryLabel = "Bar";
+    emoji = "🍸";
+    photoClass = "activity";
+  }
+
+  if (place.category === "fast_food") {
+    category = "food";
+    categoryLabel = "Food";
+    emoji = "🍔";
+    photoClass = "burger";
+  }
+
+  return {
+    id: place.id,
+    name: place.name,
+    category: category,
+    categoryLabel: categoryLabel,
+    area: "Near You",
+    distance: "Nearby",
+    rating: "—",
+    reviews: "Reviews coming soon",
+    trend: "NEW",
+    score: "—",
+    viralItem: "Social trend data coming soon",
+    social: "—",
+    emoji: emoji,
+    photoClass: photoClass,
+    rank: `#${index + 1}`,
+    latitude: place.latitude,
+    longitude: place.longitude,
+    website: place.website,
+    phone: place.phone,
+    openingHours: place.openingHours,
+    description: "Real nearby place detected from location data."
+  };
+});
+
+places.splice(0, places.length, ...convertedPlaces);
+
+renderCards();
+renderSaved();
+renderMap();
+    
   } catch (error) {
     console.error("Could not load nearby places:", error);
   }
