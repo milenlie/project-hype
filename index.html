@@ -426,7 +426,7 @@
 
   <section id="homeScreen">
     <div class="topbar">
-      <div class="location">📍 Orlando, FL⌄</div>
+      <div class="location" id="userLocation">📍 Finding your location...</div>
       <button class="icon-button">🔔</button>
     </div>
 
@@ -909,7 +909,40 @@
   document.getElementById("backBtn").addEventListener("click", () => {
     showScreen("homeScreen");
   });
+function detectUserLocation() {
+  const locationElement = document.getElementById("userLocation");
 
+  if (!navigator.geolocation) {
+    locationElement.textContent = "📍 Location unavailable";
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      locationElement.textContent = "📍 Near You";
+
+      console.log("Latitude:", latitude);
+      console.log("Longitude:", longitude);
+    },
+
+    function(error) {
+      console.log("Location error:", error);
+
+      locationElement.textContent = "📍 Orlando, FL";
+    },
+
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 300000
+    }
+  );
+}
+
+detectUserLocation();
   renderCards();
   renderSaved();
   renderMap();
