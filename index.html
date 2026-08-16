@@ -1,59 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080b10">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080b10" />
   <title>Project Hype</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       background: #080b10;
-      color: white;
+      color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    button {
+      font: inherit;
     }
 
     .app {
       max-width: 600px;
       margin: auto;
-      padding: 24px 18px 110px;
+      padding: 20px 16px 100px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
     }
 
     .location {
       font-size: 18px;
       font-weight: 700;
-      margin-bottom: 34px;
+    }
+
+    .icon-button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
     }
 
     h1 {
-      font-size: 38px;
+      font-size: 36px;
       line-height: 1.05;
-      margin: 0 0 12px;
+      margin: 0 0 10px;
     }
 
     .subtitle {
       color: #a8adb7;
-      font-size: 16px;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
     }
 
     .filters {
       display: flex;
       gap: 10px;
       overflow-x: auto;
-      padding-bottom: 15px;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
     }
 
     .filter {
       border: 1px solid #303640;
       border-radius: 30px;
-      padding: 10px 17px;
+      padding: 10px 16px;
       white-space: nowrap;
       background: #10141b;
       color: white;
@@ -61,20 +84,20 @@
     }
 
     .filter.active {
-      border: none;
+      border-color: transparent;
       background: linear-gradient(90deg, #ff315f, #ff7a21);
     }
 
     .section-title {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin: 24px 0 14px;
+      justify-content: space-between;
+      margin: 22px 0 14px;
     }
 
     .section-title h2 {
-      font-size: 21px;
       margin: 0;
+      font-size: 21px;
     }
 
     .see-all {
@@ -85,20 +108,39 @@
 
     .card {
       background: #12171f;
-      border: 1px solid #1e2630;
+      border: 1px solid #1f2732;
       border-radius: 22px;
       overflow: hidden;
       margin-bottom: 18px;
+      cursor: pointer;
     }
 
     .photo {
-      height: 210px;
-      background:
-        linear-gradient(135deg, #3d2020, #d25b27);
+      height: 190px;
+      position: relative;
       display: flex;
       align-items: flex-end;
       padding: 16px;
-      position: relative;
+    }
+
+    .photo.food {
+      background: linear-gradient(135deg, #482318, #e4692b);
+    }
+
+    .photo.burger {
+      background: linear-gradient(135deg, #382514, #b76822);
+    }
+
+    .photo.coffee {
+      background: linear-gradient(135deg, #2d251f, #8f6845);
+    }
+
+    .photo.dessert {
+      background: linear-gradient(135deg, #482a3b, #cb6d8d);
+    }
+
+    .photo.activity {
+      background: linear-gradient(135deg, #173850, #2f87a4);
     }
 
     .rank {
@@ -106,50 +148,69 @@
       top: 14px;
       left: 14px;
       background: linear-gradient(90deg, #ff315f, #ff7a21);
-      border-radius: 12px;
-      padding: 7px 11px;
+      border-radius: 11px;
+      padding: 7px 10px;
       font-weight: 800;
     }
 
-    .photo-label {
-      font-size: 46px;
+    .save-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0,0,0,.45);
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .save-btn.saved {
+      color: #ff4569;
+    }
+
+    .emoji {
+      font-size: 54px;
     }
 
     .card-content {
-      padding: 18px;
+      padding: 17px;
     }
 
     .trending {
       color: #39df79;
       font-size: 13px;
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
 
     .name {
-      font-size: 25px;
+      font-size: 24px;
       font-weight: 800;
       margin-bottom: 4px;
     }
 
     .type {
       color: #a8adb7;
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     }
 
     .details {
       display: flex;
-      gap: 18px;
-      color: #d8dce3;
+      gap: 14px;
+      flex-wrap: wrap;
       font-size: 14px;
-      margin-bottom: 18px;
+      color: #d8dce3;
+      margin-bottom: 16px;
     }
 
     .score-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      align-items: center;
+      gap: 18px;
     }
 
     .score-label {
@@ -159,7 +220,7 @@
     }
 
     .score {
-      font-size: 46px;
+      font-size: 44px;
       font-weight: 900;
       color: #ff315f;
     }
@@ -167,17 +228,17 @@
     .worth {
       border: 1px solid #66552d;
       color: #ffc849;
-      padding: 12px 14px;
       border-radius: 14px;
+      padding: 11px 13px;
+      font-size: 13px;
       font-weight: 800;
       text-align: center;
-      font-size: 13px;
     }
 
     .reason {
-      margin-top: 16px;
-      background: #1b212a;
+      margin-top: 15px;
       padding: 13px;
+      background: #1b212a;
       border-radius: 12px;
       font-size: 14px;
     }
@@ -187,8 +248,8 @@
     }
 
     .social {
+      margin-top: 11px;
       color: #aeb5c0;
-      margin-top: 12px;
       font-size: 14px;
     }
 
@@ -196,31 +257,134 @@
       color: #ffb34e;
     }
 
+    .empty-state {
+      padding: 50px 20px;
+      text-align: center;
+      color: #a8adb7;
+    }
+
+    .empty-state .big {
+      font-size: 52px;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .detail-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .back-btn {
+      border: none;
+      background: #151b23;
+      color: white;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .detail-photo {
+      min-height: 270px;
+      border-radius: 24px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+      position: relative;
+    }
+
+    .detail-photo .emoji {
+      font-size: 76px;
+    }
+
+    .detail-title {
+      font-size: 31px;
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
+
+    .detail-type {
+      color: #a8adb7;
+      margin-bottom: 18px;
+    }
+
+    .detail-scorebox {
+      background: #12171f;
+      border: 1px solid #1f2732;
+      border-radius: 18px;
+      padding: 17px;
+      margin-bottom: 15px;
+    }
+
+    .detail-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .action-btn {
+      border: 1px solid #303640;
+      background: #12171f;
+      color: white;
+      border-radius: 14px;
+      padding: 13px 8px;
+      cursor: pointer;
+    }
+
+    .info-block {
+      background: #12171f;
+      border: 1px solid #1f2732;
+      border-radius: 18px;
+      padding: 17px;
+      margin-bottom: 14px;
+    }
+
+    .info-block h3 {
+      margin: 0 0 9px;
+      font-size: 17px;
+    }
+
+    .info-block p {
+      margin: 0;
+      color: #c0c5ce;
+      line-height: 1.5;
+    }
+
     .nav {
       position: fixed;
-      bottom: 0;
       left: 0;
       right: 0;
-      margin: auto;
+      bottom: 0;
       max-width: 600px;
       height: 78px;
-      background: rgba(8, 11, 16, 0.96);
+      margin: auto;
+      background: rgba(8,11,16,.97);
       border-top: 1px solid #252c35;
       display: flex;
       justify-content: space-around;
       align-items: center;
       backdrop-filter: blur(12px);
+      z-index: 20;
     }
 
     .nav-item {
-      text-align: center;
+      flex: 1;
+      background: transparent;
+      border: none;
       color: #9299a5;
+      text-align: center;
       font-size: 13px;
+      cursor: pointer;
     }
 
     .nav-item span {
       display: block;
-      font-size: 23px;
+      font-size: 22px;
       margin-bottom: 3px;
     }
 
@@ -229,9 +393,28 @@
       font-weight: 700;
     }
 
+    .map-placeholder {
+      min-height: 500px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255,97,56,.25), transparent 20%),
+        radial-gradient(circle at 70% 60%, rgba(62,184,255,.20), transparent 25%),
+        #11161d;
+      border: 1px solid #252d37;
+      padding: 24px;
+    }
+
+    .map-pin {
+      background: #171d26;
+      border: 1px solid #39424e;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
     @media (min-width: 700px) {
       body {
-        padding-top: 30px;
+        padding-top: 20px;
       }
     }
   </style>
@@ -241,258 +424,495 @@
 
 <div class="app">
 
-  <div class="location">
-    📍 Orlando, FL⌄
-  </div>
-
-  <h1>🔥 What's Blowing Up<br>Near You</h1>
-
-  <div class="subtitle">
-    Real places. Real buzz. See what's worth it.
-  </div>
-
-  <div class="filters">
-    <button class="filter active">All</button>
-    <button class="filter">🍔 Food</button>
-    <button class="filter">☕ Coffee</button>
-    <button class="filter">🍰 Dessert</button>
-    <button class="filter">🍸 Drinks</button>
-    <button class="filter">🎉 Things to Do</button>
-  </div>
-
-  <div class="section-title">
-    <h2>🔥 Blowing Up Near You</h2>
-    <div class="see-all">See All</div>
-  </div>
-
-
-  <div class="card">
-
-    <div class="photo">
-      <div class="rank">#1</div>
-      <div class="photo-label">🍝</div>
+  <section id="homeScreen">
+    <div class="topbar">
+      <div class="location">📍 Orlando, FL⌄</div>
+      <button class="icon-button">🔔</button>
     </div>
 
-    <div class="card-content">
+    <h1>🔥 What's Blowing Up<br>Near You</h1>
 
-      <div class="trending">
-        ↗ TRENDING +184%
-      </div>
-
-      <div class="name">
-        Prato Winter Park
-      </div>
-
-      <div class="type">
-        Italian Restaurant • Winter Park
-      </div>
-
-      <div class="details">
-        <span>📍 3.2 mi</span>
-        <span>⭐ 4.7</span>
-        <span>634 reviews</span>
-      </div>
-
-      <div class="score-row">
-
-        <div>
-          <div class="score-label">
-            🔥 HYPE SCORE
-          </div>
-
-          <div class="score">
-            94
-          </div>
-        </div>
-
-        <div class="worth">
-          🏆<br>
-          WORTH<br>
-          THE HYPE
-        </div>
-
-      </div>
-
-      <div class="reason">
-        🔥 Why it's trending:
-        <strong>Spicy Vodka Rigatoni</strong>
-      </div>
-
-      <div class="social">
-        👀 <strong>1.2M+</strong> social views this week
-      </div>
-
-    </div>
-  </div>
-
-
-  <div class="card">
-
-    <div class="photo"
-         style="background:linear-gradient(135deg,#422814,#b76822);">
-
-      <div class="rank">#2</div>
-      <div class="photo-label">🍔</div>
-
+    <div class="subtitle">
+      Real places. Real buzz. See what's worth it.
     </div>
 
-    <div class="card-content">
-
-      <div class="trending">
-        ↗ TRENDING +132%
-      </div>
-
-      <div class="name">
-        Smash House
-      </div>
-
-      <div class="type">
-        Burgers • Orlando
-      </div>
-
-      <div class="details">
-        <span>📍 2.7 mi</span>
-        <span>⭐ 4.6</span>
-        <span>412 reviews</span>
-      </div>
-
-      <div class="score-row">
-
-        <div>
-          <div class="score-label">
-            🔥 HYPE SCORE
-          </div>
-
-          <div class="score">
-            91
-          </div>
-        </div>
-
-        <div class="worth">
-          🏆<br>
-          WORTH<br>
-          THE HYPE
-        </div>
-
-      </div>
-
-      <div class="reason">
-        🔥 Why it's trending:
-        <strong>Truffle Smash Burger</strong>
-      </div>
-
-      <div class="social">
-        👀 <strong>876K+</strong> social views this week
-      </div>
-
-    </div>
-  </div>
-
-
-  <div class="card">
-
-    <div class="photo"
-         style="background:linear-gradient(135deg,#33271c,#946b43);">
-
-      <div class="rank">#3</div>
-      <div class="photo-label">☕</div>
-
+    <div class="filters">
+      <button class="filter active" data-filter="all">All</button>
+      <button class="filter" data-filter="food">🍔 Food</button>
+      <button class="filter" data-filter="coffee">☕ Coffee</button>
+      <button class="filter" data-filter="dessert">🍰 Dessert</button>
+      <button class="filter" data-filter="drinks">🍸 Drinks</button>
+      <button class="filter" data-filter="activity">🎉 Things to Do</button>
     </div>
 
-    <div class="card-content">
-
-      <div class="trending">
-        ↗ TRENDING +98%
-      </div>
-
-      <div class="name">
-        Craft & Common
-      </div>
-
-      <div class="type">
-        Coffee Shop • Orlando
-      </div>
-
-      <div class="details">
-        <span>📍 1.8 mi</span>
-        <span>⭐ 4.8</span>
-        <span>256 reviews</span>
-      </div>
-
-      <div class="score-row">
-
-        <div>
-          <div class="score-label">
-            🔥 HYPE SCORE
-          </div>
-
-          <div class="score">
-            88
-          </div>
-        </div>
-
-        <div class="worth">
-          🏆<br>
-          WORTH<br>
-          THE HYPE
-        </div>
-
-      </div>
-
-      <div class="reason">
-        🔥 Why it's trending:
-        <strong>Salted Caramel Latte</strong>
-      </div>
-
+    <div class="section-title">
+      <h2>🔥 Blowing Up Near You</h2>
+      <div class="see-all">See All</div>
     </div>
-  </div>
+
+    <div id="cardsContainer"></div>
+  </section>
+
+
+  <section id="detailScreen" class="hidden">
+    <div class="detail-header">
+      <button class="back-btn" id="backBtn">‹</button>
+      <strong>Place Details</strong>
+    </div>
+
+    <div id="detailContent"></div>
+  </section>
+
+
+  <section id="mapScreen" class="hidden">
+    <div class="topbar">
+      <div class="location">🗺️ Trending Map</div>
+    </div>
+
+    <div class="subtitle">
+      Prototype map view for trending places around Orlando.
+    </div>
+
+    <div class="map-placeholder" id="mapList"></div>
+  </section>
+
+
+  <section id="savedScreen" class="hidden">
+    <div class="topbar">
+      <div class="location">❤️ Saved</div>
+    </div>
+
+    <h1>Your Places</h1>
+
+    <div class="subtitle">
+      Places you want to check out later.
+    </div>
+
+    <div id="savedContainer"></div>
+  </section>
+
+
+  <section id="meScreen" class="hidden">
+    <div class="topbar">
+      <div class="location">👤 Me</div>
+    </div>
+
+    <h1>Your Profile</h1>
+
+    <div class="info-block">
+      <h3>Project Hype Prototype</h3>
+      <p>
+        Account features will come later. For now, this screen is simply here
+        to show how the bottom navigation will work.
+      </p>
+    </div>
+  </section>
 
 </div>
 
 
-<div class="nav">
-
-  <div class="nav-item active">
+<nav class="nav">
+  <button class="nav-item active" data-screen="homeScreen">
     <span>🔥</span>
     Trending
-  </div>
+  </button>
 
-  <div class="nav-item">
+  <button class="nav-item" data-screen="mapScreen">
     <span>🗺️</span>
     Map
-  </div>
+  </button>
 
-  <div class="nav-item">
+  <button class="nav-item" data-screen="savedScreen">
     <span>♡</span>
     Saved
-  </div>
+  </button>
 
-  <div class="nav-item">
+  <button class="nav-item" data-screen="meScreen">
     <span>◉</span>
     Me
-  </div>
-
-</div>
+  </button>
+</nav>
 
 
 <script>
+  const places = [
+    {
+      id: 1,
+      name: "Prato Winter Park",
+      category: "food",
+      categoryLabel: "Italian Restaurant",
+      area: "Winter Park",
+      distance: "3.2 mi",
+      rating: "4.7",
+      reviews: "634 reviews",
+      trend: "+184%",
+      score: 94,
+      viralItem: "Spicy Vodka Rigatoni",
+      social: "1.2M+",
+      emoji: "🍝",
+      photoClass: "food",
+      rank: "#1",
+      description:
+        "A polished Italian restaurant in Winter Park. This demo profile shows how users could quickly understand why a place is trending before deciding whether to go."
+    },
+    {
+      id: 2,
+      name: "Smash House",
+      category: "food",
+      categoryLabel: "Burgers",
+      area: "Orlando",
+      distance: "2.7 mi",
+      rating: "4.6",
+      reviews: "412 reviews",
+      trend: "+132%",
+      score: 91,
+      viralItem: "Truffle Smash Burger",
+      social: "876K+",
+      emoji: "🍔",
+      photoClass: "burger",
+      rank: "#2",
+      description:
+        "A burger-focused demo listing. Later, this space can show actual trending videos, operating hours, menu links, and directions."
+    },
+    {
+      id: 3,
+      name: "Craft & Common",
+      category: "coffee",
+      categoryLabel: "Coffee Shop",
+      area: "Orlando",
+      distance: "1.8 mi",
+      rating: "4.8",
+      reviews: "256 reviews",
+      trend: "+98%",
+      score: 88,
+      viralItem: "Salted Caramel Latte",
+      social: "620K+",
+      emoji: "☕",
+      photoClass: "coffee",
+      rank: "#3",
+      description:
+        "A coffee-shop demo profile showing how Project Hype could surface local places getting unusual attention online."
+    },
+    {
+      id: 4,
+      name: "Sweet District",
+      category: "dessert",
+      categoryLabel: "Dessert",
+      area: "Orlando",
+      distance: "4.1 mi",
+      rating: "4.5",
+      reviews: "198 reviews",
+      trend: "+76%",
+      score: 84,
+      viralItem: "Dubai Chocolate Sundae",
+      social: "403K+",
+      emoji: "🍨",
+      photoClass: "dessert",
+      rank: "#4",
+      description:
+        "A dessert demo listing. This helps test how category filtering works before we connect the app to live sources."
+    },
+    {
+      id: 5,
+      name: "Glow Gardens",
+      category: "activity",
+      categoryLabel: "Experience",
+      area: "Orlando",
+      distance: "6.3 mi",
+      rating: "4.7",
+      reviews: "721 reviews",
+      trend: "+71%",
+      score: 86,
+      viralItem: "Night Garden Experience",
+      social: "510K+",
+      emoji: "✨",
+      photoClass: "activity",
+      rank: "#5",
+      description:
+        "A Things to Do example so the product is not limited to restaurants. The long-term concept includes experiences, attractions, nightlife, and photo spots."
+    }
+  ];
 
-  const filters = document.querySelectorAll(".filter");
+  let currentFilter = "all";
+  let savedIds = JSON.parse(localStorage.getItem("projectHypeSaved") || "[]");
 
-  filters.forEach(button => {
+  const cardsContainer = document.getElementById("cardsContainer");
+  const savedContainer = document.getElementById("savedContainer");
+  const detailContent = document.getElementById("detailContent");
+  const mapList = document.getElementById("mapList");
 
+  function isSaved(id) {
+    return savedIds.includes(id);
+  }
+
+  function toggleSave(id, event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    if (isSaved(id)) {
+      savedIds = savedIds.filter(savedId => savedId !== id);
+    } else {
+      savedIds.push(id);
+    }
+
+    localStorage.setItem("projectHypeSaved", JSON.stringify(savedIds));
+    renderCards();
+    renderSaved();
+  }
+
+  function cardHTML(place) {
+    return `
+      <div class="card" onclick="openPlace(${place.id})">
+        <div class="photo ${place.photoClass}">
+          <div class="rank">${place.rank}</div>
+
+          <button
+            class="save-btn ${isSaved(place.id) ? "saved" : ""}"
+            onclick="toggleSave(${place.id}, event)"
+            aria-label="Save ${place.name}"
+          >
+            ${isSaved(place.id) ? "♥" : "♡"}
+          </button>
+
+          <div class="emoji">${place.emoji}</div>
+        </div>
+
+        <div class="card-content">
+          <div class="trending">
+            ↗ TRENDING ${place.trend}
+          </div>
+
+          <div class="name">
+            ${place.name}
+          </div>
+
+          <div class="type">
+            ${place.categoryLabel} • ${place.area}
+          </div>
+
+          <div class="details">
+            <span>📍 ${place.distance}</span>
+            <span>⭐ ${place.rating}</span>
+            <span>${place.reviews}</span>
+          </div>
+
+          <div class="score-row">
+            <div>
+              <div class="score-label">
+                🔥 HYPE SCORE
+              </div>
+
+              <div class="score">
+                ${place.score}
+              </div>
+            </div>
+
+            <div class="worth">
+              🏆<br>
+              WORTH<br>
+              THE HYPE
+            </div>
+          </div>
+
+          <div class="reason">
+            🔥 Why it's trending:
+            <strong>${place.viralItem}</strong>
+          </div>
+
+          <div class="social">
+            👀 <strong>${place.social}</strong> social views this week
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderCards() {
+    const filteredPlaces =
+      currentFilter === "all"
+        ? places
+        : places.filter(place => place.category === currentFilter);
+
+    if (!filteredPlaces.length) {
+      cardsContainer.innerHTML = `
+        <div class="empty-state">
+          <span class="big">👀</span>
+          Nothing in this category yet.
+        </div>
+      `;
+      return;
+    }
+
+    cardsContainer.innerHTML = filteredPlaces.map(cardHTML).join("");
+  }
+
+  function renderSaved() {
+    const savedPlaces = places.filter(place => isSaved(place.id));
+
+    if (!savedPlaces.length) {
+      savedContainer.innerHTML = `
+        <div class="empty-state">
+          <span class="big">♡</span>
+          You haven't saved any places yet.<br><br>
+          Tap the heart on a place you want to remember.
+        </div>
+      `;
+      return;
+    }
+
+    savedContainer.innerHTML = savedPlaces.map(cardHTML).join("");
+  }
+
+  function renderMap() {
+    mapList.innerHTML = places.map(place => `
+      <div class="map-pin" onclick="openPlace(${place.id})">
+        <strong>${place.emoji} ${place.name}</strong><br>
+        <span style="color:#a8adb7;">
+          ${place.distance} • Hype Score ${place.score} • Trending ${place.trend}
+        </span>
+      </div>
+    `).join("");
+  }
+
+  function openPlace(id) {
+    const place = places.find(item => item.id === id);
+
+    detailContent.innerHTML = `
+      <div class="detail-photo ${place.photoClass}">
+        <button
+          class="save-btn ${isSaved(place.id) ? "saved" : ""}"
+          onclick="toggleSave(${place.id}, event); openPlace(${place.id});"
+        >
+          ${isSaved(place.id) ? "♥" : "♡"}
+        </button>
+
+        <div class="emoji">${place.emoji}</div>
+      </div>
+
+      <div class="detail-title">
+        ${place.name}
+      </div>
+
+      <div class="detail-type">
+        ${place.categoryLabel} • ${place.area}
+      </div>
+
+      <div class="detail-scorebox">
+        <div class="trending">
+          ↗ TRENDING ${place.trend}
+        </div>
+
+        <div class="score-row">
+          <div>
+            <div class="score-label">
+              🔥 HYPE SCORE
+            </div>
+            <div class="score">${place.score}</div>
+          </div>
+
+          <div class="worth">
+            🏆<br>
+            WORTH THE HYPE
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-actions">
+        <button class="action-btn">🧭<br>Directions</button>
+        <button class="action-btn" onclick="toggleSave(${place.id})">
+          ${isSaved(place.id) ? "♥" : "♡"}<br>Save
+        </button>
+        <button class="action-btn">↗<br>Share</button>
+      </div>
+
+      <div class="info-block">
+        <h3>🔥 Why it's trending</h3>
+        <p>${place.viralItem}</p>
+      </div>
+
+      <div class="info-block">
+        <h3>📊 Social momentum</h3>
+        <p>
+          ${place.social} demo social views this week with trend velocity of
+          ${place.trend}.
+        </p>
+      </div>
+
+      <div class="info-block">
+        <h3>⭐ Quick facts</h3>
+        <p>
+          Rating ${place.rating} • ${place.reviews} • ${place.distance} away
+        </p>
+      </div>
+
+      <div class="info-block">
+        <h3>About this place</h3>
+        <p>${place.description}</p>
+      </div>
+    `;
+
+    showScreen("detailScreen", false);
+  }
+
+  function showScreen(screenId, updateNav = true) {
+    const screens = [
+      "homeScreen",
+      "detailScreen",
+      "mapScreen",
+      "savedScreen",
+      "meScreen"
+    ];
+
+    screens.forEach(id => {
+      document.getElementById(id).classList.toggle("hidden", id !== screenId);
+    });
+
+    if (updateNav) {
+      document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.toggle(
+          "active",
+          item.dataset.screen === screenId
+        );
+      });
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (screenId === "savedScreen") {
+      renderSaved();
+    }
+
+    if (screenId === "mapScreen") {
+      renderMap();
+    }
+  }
+
+  document.querySelectorAll(".filter").forEach(button => {
     button.addEventListener("click", () => {
-
-      filters.forEach(btn =>
+      document.querySelectorAll(".filter").forEach(btn =>
         btn.classList.remove("active")
       );
 
       button.classList.add("active");
-
+      currentFilter = button.dataset.filter;
+      renderCards();
     });
-
   });
 
+  document.querySelectorAll(".nav-item").forEach(button => {
+    button.addEventListener("click", () => {
+      showScreen(button.dataset.screen);
+    });
+  });
+
+  document.getElementById("backBtn").addEventListener("click", () => {
+    showScreen("homeScreen");
+  });
+
+  renderCards();
+  renderSaved();
+  renderMap();
 </script>
 
 </body>
