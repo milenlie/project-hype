@@ -964,7 +964,31 @@ fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latit
   );
 }
 
- async function loadNearbyPlaces(latitude, longitude) {
+ function calculateDistanceMiles(lat1, lon1, lat2, lon2) {
+  const earthRadiusMiles = 3958.8;
+
+  const toRadians = degrees =>
+    degrees * (Math.PI / 180);
+
+  const dLat = toRadians(lat2 - lat1);
+  const dLon = toRadians(lon2 - lon1);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(lat1)) *
+    Math.cos(toRadians(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+
+  const c =
+    2 * Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
+
+  return earthRadiusMiles * c;
+}
+  async function loadNearbyPlaces(latitude, longitude) {
   console.log("Loading nearby places...");
   console.log("User coordinates:", latitude, longitude);
 
@@ -1074,7 +1098,12 @@ console.log("Project Hype real places:", realPlaces);
     category: category,
     categoryLabel: categoryLabel,
     area: "Near You",
-    distance: "Nearby",
+    distance: `${calculateDistanceMiles(
+  latitude,
+  longitude,
+  place.latitude,
+  place.longitude
+).toFixed(1)} mi`,,
     rating: "—",
     reviews: "Reviews coming soon",
     trend: "NEW",
