@@ -922,7 +922,27 @@ function detectUserLocation() {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
 
-      locationElement.textContent = "📍 Near You";
+fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
+  .then(response => response.json())
+  .then(data => {
+    const city =
+      data.city ||
+      data.locality ||
+      data.principalSubdivision ||
+      "Near You";
+
+    const state = data.principalSubdivision || "";
+
+    if (city && state && city !== state) {
+      locationElement.textContent = `📍 ${city}, ${state}`;
+    } else {
+      locationElement.textContent = `📍 ${city}`;
+    }
+  })
+  .catch(error => {
+    console.log("Reverse geocoding error:", error);
+    locationElement.textContent = "📍 Near You";
+  });
 
       console.log("Latitude:", latitude);
       console.log("Longitude:", longitude);
