@@ -743,7 +743,7 @@ ${place.viralItem !== "Social trend data coming soon"
 }
           </div>
 
-          ${place.social !== "—"
+          ${place.social && place.social !== "-" && place.social !== "—"
   ? `
     <div class="social">
       👀 <strong>${place.social}</strong> social views this week
