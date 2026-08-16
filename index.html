@@ -990,6 +990,22 @@ fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latit
     const data = await response.json();
 
     console.log("Nearby places:", data);
+const realPlaces = data.elements
+  .filter(place => place.tags && place.tags.name)
+  .map(place => ({
+    id: place.id,
+    name: place.tags.name,
+    category: place.tags.amenity || "place",
+    cuisine: place.tags.cuisine || "",
+    latitude: place.lat,
+    longitude: place.lon,
+    website: place.tags.website || "",
+    phone: place.tags.phone || "",
+    openingHours: place.tags.opening_hours || ""
+  }));
+
+console.log("Project Hype real places:", realPlaces);
+    
   } catch (error) {
     console.error("Could not load nearby places:", error);
   }
