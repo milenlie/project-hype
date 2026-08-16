@@ -1098,12 +1098,7 @@ console.log("Project Hype real places:", realPlaces);
     category: category,
     categoryLabel: categoryLabel,
     area: "Near You",
-    distance: `${calculateDistanceMiles(
-  latitude,
-  longitude,
-  place.latitude,
-  place.longitude
-).toFixed(1)} mi`,
+    distance: calculateDistanceMiles(latitude, longitude, place.latitude, place.longitude).toFixed(1) + " mi",
     rating: "—",
     reviews: "Reviews coming soon",
     trend: "NEW",
