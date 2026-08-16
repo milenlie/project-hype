@@ -847,7 +847,7 @@ ${place.viralItem !== "Social trend data coming soon"
       </div>
 
       <div class="detail-actions">
-        <button class="action-btn">🧭<br>Directions</button>
+        <button class="action-btn" onclick="openDirections(${place.latitude}, ${place.longitude}, '${place.name.replace(/'/g, "\\'")}')">🧭<br>Directions</button>
         <button class="action-btn" onclick="toggleSave(${place.id})">
           ${isSaved(place.id) ? "♥" : "♡"}<br>Save
         </button>
@@ -882,7 +882,17 @@ ${place.viralItem !== "Social trend data coming soon"
 
     showScreen("detailScreen", false);
   }
+function openDirections(latitude, longitude, name) {
+  if (!latitude || !longitude) {
+    alert("Directions are not available for this place yet.");
+    return;
+  }
 
+  const destination = `${latitude},${longitude}`;
+  const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+
+  window.open(url, "_blank");
+}
   function showScreen(screenId, updateNav = true) {
     const screens = [
       "homeScreen",
