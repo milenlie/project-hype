@@ -691,33 +691,56 @@
             ${place.categoryLabel} • ${place.area}
           </div>
 
-          <div class="details">
-            <span>📍 ${place.distance}</span>
-            <span>⭐ ${place.rating}</span>
-            <span>${place.reviews}</span>
-          </div>
+         <div class="details">
+  <span>📍 ${place.distance}</span>
 
-          <div class="score-row">
-            <div>
-              <div class="score-label">
-                🔥 HYPE SCORE
-              </div>
+  ${place.rating !== "—"
+    ? `<span>⭐ ${place.rating}</span>`
+    : ""
+  }
 
-              <div class="score">
-                ${place.score}
-              </div>
-            </div>
+  ${place.reviews !== "Reviews coming soon"
+    ? `<span>${place.reviews}</span>`
+    : ""
+  }
+</div>
 
-            <div class="worth">
-              🏆<br>
-              WORTH<br>
-              THE HYPE
-            </div>
-          </div>
+${place.score !== "—"
+  ? `
+    <div class="score-row">
+      <div>
+        <div class="score-label">
+          🔥 HYPE SCORE
+        </div>
 
-          <div class="reason">
-            🔥 Why it's trending:
-            <strong>${place.viralItem}</strong>
+        <div class="score">
+          ${place.score}
+        </div>
+      </div>
+
+      <div class="worth">
+        🏆<br>
+        WORTH<br>
+        THE HYPE
+      </div>
+    </div>
+  `
+  : `
+    <div class="reason">
+      📍 <strong>NEW NEAR YOU</strong>
+    </div>
+  `
+}
+
+${place.viralItem !== "Social trend data coming soon"
+  ? `
+    <div class="reason">
+      🔥 Why it's trending:
+      <strong>${place.viralItem}</strong>
+    </div>
+  `
+  : ""
+}
           </div>
 
           <div class="social">
